@@ -18,26 +18,30 @@ class Stock
      * @ORM\Column(type="integer")
      */
     private $id;
-    
+
     /**
      * @ORM\Column(type="integer")
      */
     private $quantite;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="stocks")
-     */
-    private $product;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Magasin::class, inversedBy="stocks")
      */
     private $magasin;
 
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $prix;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="stocks")
+     */
+    private $product;
+
     public function __construct()
     {
-        $this->product = new ArrayCollection();
-        $this->magasins_stock = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -57,18 +61,6 @@ class Stock
         return $this;
     }
 
-    public function getProduct(): ?Product
-    {
-        return $this->product;
-    }
-
-    public function setProduct(?Product $product): self
-    {
-        $this->product = $product;
-
-        return $this;
-    }
-
     public function getMagasin(): ?Magasin
     {
         return $this->magasin;
@@ -77,6 +69,30 @@ class Stock
     public function setMagasin(?Magasin $magasin): self
     {
         $this->magasin = $magasin;
+
+        return $this;
+    }
+
+    public function getPrix(): ?float
+    {
+        return $this->prix;
+    }
+
+    public function setPrix(float $prix): self
+    {
+        $this->prix = $prix;
+
+        return $this;
+    }
+
+    public function getProduct(): ?Product
+    {
+        return $this->product;
+    }
+
+    public function setProduct(?Product $product): self
+    {
+        $this->product = $product;
 
         return $this;
     }
