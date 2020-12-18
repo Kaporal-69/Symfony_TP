@@ -18,16 +18,21 @@ class Stock
      * @ORM\Column(type="integer")
      */
     private $id;
+    
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $quantite;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Product::class, inversedBy="products")
+     * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="stocks")
      */
     private $product;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Magasin::class, mappedBy="stock")
+     * @ORM\ManyToOne(targetEntity=Magasin::class, inversedBy="stocks")
      */
-    private $magasins_stock;
+    private $magasin;
 
     public function __construct()
     {
@@ -40,53 +45,38 @@ class Stock
         return $this->id;
     }
 
-    /**
-     * @return Collection|Product[]
-     */
-    public function getProduct(): Collection
+    public function getQuantite(): ?int
+    {
+        return $this->quantite;
+    }
+
+    public function setQuantite(int $quantite): self
+    {
+        $this->quantite = $quantite;
+
+        return $this;
+    }
+
+    public function getProduct(): ?Product
     {
         return $this->product;
     }
 
-    public function addProduct(Product $product): self
+    public function setProduct(?Product $product): self
     {
-        if (!$this->product->contains($product)) {
-            $this->product[] = $product;
-        }
+        $this->product = $product;
 
         return $this;
     }
 
-    public function removeProduct(Product $product): self
+    public function getMagasin(): ?Magasin
     {
-        $this->product->removeElement($product);
-
-        return $this;
+        return $this->magasin;
     }
 
-    /**
-     * @return Collection|Magasin[]
-     */
-    public function getMagasinsStock(): Collection
+    public function setMagasin(?Magasin $magasin): self
     {
-        return $this->magasins_stock;
-    }
-
-    public function addMagasinsStock(Magasin $magasinsStock): self
-    {
-        if (!$this->magasins_stock->contains($magasinsStock)) {
-            $this->magasins_stock[] = $magasinsStock;
-            $magasinsStock->addStock($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMagasinsStock(Magasin $magasinsStock): self
-    {
-        if ($this->magasins_stock->removeElement($magasinsStock)) {
-            $magasinsStock->removeStock($this);
-        }
+        $this->magasin = $magasin;
 
         return $this;
     }

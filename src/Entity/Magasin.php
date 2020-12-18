@@ -24,10 +24,6 @@ class Magasin
      */
     private $name;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Stock::class, inversedBy="magasins_stock")
-     */
-    private $stock;
 
     /**
      * @ORM\OneToMany(targetEntity=Commande::class, mappedBy="magasin")
@@ -39,11 +35,17 @@ class Magasin
      */
     private $rendezVouses;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Stock::class, mappedBy="magasin")
+     */
+    private $stocks;
+
     public function __construct()
     {
         $this->stock = new ArrayCollection();
         $this->commandes = new ArrayCollection();
         $this->rendezVouses = new ArrayCollection();
+        $this->stocks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -59,30 +61,6 @@ class Magasin
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Stock[]
-     */
-    public function getStock(): Collection
-    {
-        return $this->stock;
-    }
-
-    public function addStock(Stock $stock): self
-    {
-        if (!$this->stock->contains($stock)) {
-            $this->stock[] = $stock;
-        }
-
-        return $this;
-    }
-
-    public function removeStock(Stock $stock): self
-    {
-        $this->stock->removeElement($stock);
 
         return $this;
     }
@@ -141,6 +119,36 @@ class Magasin
             // set the owning side to null (unless already changed)
             if ($rendezVouse->getMagasin() === $this) {
                 $rendezVouse->setMagasin(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Stock[]
+     */
+    public function getStocks(): Collection
+    {
+        return $this->stocks;
+    }
+
+    public function addStock(Stock $stock): self
+    {
+        if (!$this->stocks->contains($stock)) {
+            $this->stocks[] = $stock;
+            $stock->setMagasin($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStock(Stock $stock): self
+    {
+        if ($this->stocks->removeElement($stock)) {
+            // set the owning side to null (unless already changed)
+            if ($stock->getMagasin() === $this) {
+                $stock->setMagasin(null);
             }
         }
 

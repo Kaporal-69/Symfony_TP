@@ -25,7 +25,7 @@ class Product
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Stock::class, mappedBy="product")
+     * @ORM\OneToMany(targetEntity=Stock::class, mappedBy="product")
      */
     private $stocks;
 
@@ -63,7 +63,7 @@ class Product
     {
         if (!$this->stocks->contains($stock)) {
             $this->stocks[] = $stock;
-            $stock->addStock($this);
+            $stock->setProduct($this);
         }
 
         return $this;
@@ -72,9 +72,13 @@ class Product
     public function removeStock(Stock $stock): self
     {
         if ($this->stocks->removeElement($stock)) {
-            $stock->removeStock($this);
+            // set the owning side to null (unless already changed)
+            if ($stock->getProduct() === $this) {
+                $stock->setProduct(null);
+            }
         }
 
         return $this;
     }
+
 }
