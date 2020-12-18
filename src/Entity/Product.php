@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\MagasinRepository;
+use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=MagasinRepository::class)
+ * @ORM\Entity(repositoryClass=ProductRepository::class)
  */
-class Magasin
+class Product
 {
     /**
      * @ORM\Id
@@ -25,13 +25,13 @@ class Magasin
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Stock::class, inversedBy="magasins_stock")
+     * @ORM\ManyToMany(targetEntity=Stock::class, mappedBy="product")
      */
-    private $stock;
+    private $products;
 
     public function __construct()
     {
-        $this->stock = new ArrayCollection();
+        $this->products = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -54,23 +54,26 @@ class Magasin
     /**
      * @return Collection|Stock[]
      */
-    public function getStock(): Collection
+    public function getProducts(): Collection
     {
-        return $this->stock;
+        return $this->products;
     }
 
-    public function addStock(Stock $stock): self
+    public function addProduct(Stock $product): self
     {
-        if (!$this->stock->contains($stock)) {
-            $this->stock[] = $stock;
+        if (!$this->products->contains($product)) {
+            $this->products[] = $product;
+            $product->addProduct($this);
         }
 
         return $this;
     }
 
-    public function removeStock(Stock $stock): self
+    public function removeProduct(Stock $product): self
     {
-        $this->stock->removeElement($stock);
+        if ($this->products->removeElement($product)) {
+            $product->removeProduct($this);
+        }
 
         return $this;
     }
