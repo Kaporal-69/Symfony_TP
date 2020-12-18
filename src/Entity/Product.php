@@ -27,11 +27,11 @@ class Product
     /**
      * @ORM\ManyToMany(targetEntity=Stock::class, mappedBy="product")
      */
-    private $products;
+    private $stocks;
 
     public function __construct()
     {
-        $this->products = new ArrayCollection();
+        $this->stocks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -54,25 +54,25 @@ class Product
     /**
      * @return Collection|Stock[]
      */
-    public function getProducts(): Collection
+    public function getStocks(): Collection
     {
-        return $this->products;
+        return $this->stocks;
     }
 
-    public function addProduct(Stock $product): self
+    public function addStock(Stock $stock): self
     {
-        if (!$this->products->contains($product)) {
-            $this->products[] = $product;
-            $product->addProduct($this);
+        if (!$this->stocks->contains($stock)) {
+            $this->stocks[] = $stock;
+            $stock->addStock($this);
         }
 
         return $this;
     }
 
-    public function removeProduct(Stock $product): self
+    public function removeStock(Stock $stock): self
     {
-        if ($this->products->removeElement($product)) {
-            $product->removeProduct($this);
+        if ($this->stocks->removeElement($stock)) {
+            $stock->removeStock($this);
         }
 
         return $this;
