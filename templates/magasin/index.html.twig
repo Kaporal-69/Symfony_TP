@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MagasinController!{% endblock %}
+
+{% block body %}
+{% for shop in shops %}
+{{shop.name}}
+{% endfor %}
+{% endblock %}
