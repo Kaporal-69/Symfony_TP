@@ -24,13 +24,13 @@
 
     {{ include('magasin/_delete_form.html.twig') }}
 
-    {% for product in products %}
+    {% for stock in magasin.stocks %}
             <tr>
-                <td>{{ product.id }}</td>
-                <td>{{ product.name }}</td>
+                <td>{{ stock.product.id }}</td>
+                <td>{{ stock.product.name }}</td>
                 <td>
-                    <a href="{{ path('product_show', {'id': product.id}) }}">show</a>
-                    <a href="{{ path('product_edit', {'id': product.id}) }}">edit</a>
+                    <a href="{{ path('product_show', {'id': stock.product.id}) }}">show</a>
+                    <a href="{{ path('product_edit', {'id': stock.product.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}

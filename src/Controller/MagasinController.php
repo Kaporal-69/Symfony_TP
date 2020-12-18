@@ -52,9 +52,9 @@ class MagasinController extends AbstractController
      * @Route("/{id}", name="magasin_show", methods={"GET"})
      */
     public function show(Magasin $magasin): Response
-    {
+    {       
         return $this->render('magasin/show.html.twig', [
-            'magasin' => $magasin,
+            'magasin' => $magasin
         ]);
     }
 
