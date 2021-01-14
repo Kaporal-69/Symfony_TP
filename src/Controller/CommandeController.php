@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Commande;
 use App\Entity\LigneCommande;
+use App\Entity\Magasin;
 use App\Entity\Product;
 use App\Entity\Stock;
 use App\Entity\User;
@@ -121,7 +122,7 @@ class CommandeController extends AbstractController
             $commande->setUser($em->getRepository(User::class)->findOneById($data['user']));
             $commande->setPrixTotal(0);
             $commande->setEtat(1);
-            $commande->setMagasin($data["shop"]);
+            $commande->setMagasin($em->getRepository(Magasin::class)->findOneById($data["shop"]));
             $em->persist($commande);
         }
         $produit = $em->getRepository(Product::class)->findOneById($data['product']);
@@ -148,6 +149,6 @@ class CommandeController extends AbstractController
         $commande->setEtat(2);
         $em->persist($commande);
         $em->flush();
-        return $this->redirectToRoute('rendez_vous_new');
+        return $this->redirectToRoute('rendez_vous_new', array('id_commande' => $commande->getId()));
     }
 }

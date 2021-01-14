@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Commande;
 use App\Entity\RendezVous;
 use App\Form\RendezVousType;
 use App\Repository\RendezVousRepository;
@@ -26,16 +27,24 @@ class RendezVousController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="rendez_vous_new", methods={"GET","POST"})
+     * @Route("/{id_commande}/new", name="rendez_vous_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, $id_commande): Response
     {
+        $em = $this->getDoctrine()->getManager();
+        $commande = $em->getRepository(Commande::class)->findOneById($id_commande);
+        if($commande->getUser()->getId() != $this->getUser()->getId()) {
+            return $this->redirectToRoute('commande_index');
+        }
         $rendezVou = new RendezVous();
         $form = $this->createForm(RendezVousType::class, $rendezVou);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $rendezVou->setMagasin($commande->getMagasin());
+            $rendezVou->setUser($this->getUser());
+            $rendezVou->setCommande($commande);
             $entityManager->persist($rendezVou);
             $entityManager->flush();
 
