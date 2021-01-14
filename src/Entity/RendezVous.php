@@ -28,7 +28,7 @@ class RendezVous
     private $commande;
 
     /**
-     * @ORM\ManyToOne(targetEntity=magasin::class, inversedBy="rendezVouses")
+     * @ORM\ManyToOne(targetEntity=Magasin::class, inversedBy="rendezVouses")
      */
     private $magasin;
 
@@ -38,7 +38,7 @@ class RendezVous
     private $jour;
 
     /**
-     * @ORM\Column(type="time")
+     * @ORM\Column(type="integer")
      */
     private $horaire;
 
@@ -95,12 +95,12 @@ class RendezVous
         return $this;
     }
 
-    public function getHoraire(): ?\DateTimeInterface
+    public function getHoraire(): ?int
     {
         return $this->horaire;
     }
 
-    public function setHoraire(\DateTimeInterface $horaire): self
+    public function setHoraire(int $horaire): self
     {
         $this->horaire = $horaire;
 
