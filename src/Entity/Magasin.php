@@ -42,7 +42,7 @@ class Magasin
 
     public function __construct()
     {
-        $this->stock = new ArrayCollection();
+        $this->stocks = new ArrayCollection();
         $this->commandes = new ArrayCollection();
         $this->rendezVouses = new ArrayCollection();
         $this->stocks = new ArrayCollection();
@@ -133,22 +133,22 @@ class Magasin
         return $this->stocks;
     }
 
-    public function addStock(Stock $stock): self
+    public function addStock(Stock $stocks): self
     {
-        if (!$this->stocks->contains($stock)) {
-            $this->stocks[] = $stock;
-            $stock->setMagasin($this);
+        if (!$this->stocks->contains($stocks)) {
+            $this->stocks[] = $stocks;
+            $stocks->setMagasin($this);
         }
 
         return $this;
     }
 
-    public function removeStock(Stock $stock): self
+    public function removeStock(Stock $stocks): self
     {
-        if ($this->stocks->removeElement($stock)) {
+        if ($this->stocks->removeElement($stocks)) {
             // set the owning side to null (unless already changed)
-            if ($stock->getMagasin() === $this) {
-                $stock->setMagasin(null);
+            if ($stocks->getMagasin() === $this) {
+                $stocks->setMagasin(null);
             }
         }
 
