@@ -32,6 +32,11 @@ class LigneCommande
      */
     private $quantite;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $prixTotal;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +74,18 @@ class LigneCommande
     public function setQuantite(int $quantite): self
     {
         $this->quantite = $quantite;
+
+        return $this;
+    }
+
+    public function getPrixTotal(): ?float
+    {
+        return $this->prixTotal;
+    }
+
+    public function setPrixTotal(?float $prixTotal): self
+    {
+        $this->prixTotal = $prixTotal;
 
         return $this;
     }

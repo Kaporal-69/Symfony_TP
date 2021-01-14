@@ -19,32 +19,30 @@ class CommandeRepository extends ServiceEntityRepository
         parent::__construct($registry, Commande::class);
     }
 
-    // /**
-    //  * @return Commande[] Returns an array of Commande objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+    * @return Commande[] Returns an array of Commande objects
+    */
+    public function findByUser($user)
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('c.User = :user')
+            ->setParameter('user', $user)
             ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Commande
+    
+    public function findCurrentCommandeByUser($user): ?Commande
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('c.User = :user')
+            ->andWhere('c.etat = :notPurchased')
+            ->setParameter('user', $user)
+            ->setParameter('notPurchased',1)
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    */
 }

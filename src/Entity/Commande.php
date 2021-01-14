@@ -34,6 +34,16 @@ class Commande
      */
     private $ligneCommandes;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $etat;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $PrixTotal;
+
     public function __construct()
     {
         $this->ligneCommandes = new ArrayCollection();
@@ -94,6 +104,30 @@ class Commande
                 $ligneCommande->setCommande(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getEtat(): ?int
+    {
+        return $this->etat;
+    }
+
+    public function setEtat(int $etat): self
+    {
+        $this->etat = $etat;
+
+        return $this;
+    }
+
+    public function getPrixTotal(): ?float
+    {
+        return $this->PrixTotal;
+    }
+
+    public function setPrixTotal(float $PrixTotal): self
+    {
+        $this->PrixTotal = $PrixTotal;
 
         return $this;
     }
