@@ -2,25 +2,28 @@
 
 namespace App\Form;
 
-use App\Entity\Magasin;
+use App\Entity\RendezVous;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class MagasinType extends AbstractType
+class RendezVousType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('stocks')
+            ->add('jour')
+            ->add('horaire')
+            ->add('user')
+            ->add('commande')
+            ->add('magasin')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Magasin::class,
+            'data_class' => RendezVous::class,
         ]);
     }
 }

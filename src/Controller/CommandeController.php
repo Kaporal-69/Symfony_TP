@@ -138,4 +138,16 @@ class CommandeController extends AbstractController
         $em->flush();
         return $this->redirectToRoute('commande_index');
     }
+
+    /**
+     * @Route("/{id}/validate", name="commande_validate", methods={"GET","POST"})
+     */
+    public function validateOrder(Request $request, Commande $commande): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $commande->setEtat(2);
+        $em->persist($commande);
+        $em->flush();
+        return $this->redirectToRoute('rendez_vous_new');
+    }
 }
