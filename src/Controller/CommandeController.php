@@ -102,6 +102,17 @@ class CommandeController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$commande->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
+            $commande->getLigneCommandes()->clear();
+            $rdv = $commande->getRendezVous();
+            if($rdv) {
+                $rdv->setCommande(null);
+                $commande->setRendezVous(null);
+                $entityManager->persist($rdv);
+                $entityManager->persist($commande);
+                $entityManager->flush();
+            }
+            $entityManager->persist($commande);
+            $entityManager->flush();
             $entityManager->remove($commande);
             $entityManager->flush();
         }
