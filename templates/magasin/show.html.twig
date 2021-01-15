@@ -31,15 +31,18 @@
                     {% else %} 
                         <a href="{{ path('app_login') }}">Connectez-vous</a> pour commander! 
                     {% endif %}
+                </td>
                 <td>
-                    <a href="{{ path('product_show', {'id': stock.product.id}) }}">show</a>
-                    <a href="{{ path('product_edit', {'id': stock.product.id}) }}">edit</a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('product_show', {'id': stock.product.id}) }}">show</a>
+                        <a href="{{ path('product_edit', {'id': stock.product.id}) }}">edit</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
             <tr>
                 <td colspan="3">no records found</td>
             </tr>
-        {% endfor %}
+    {% endfor %}
         </table>
 {% endblock %}
