@@ -17,7 +17,15 @@
         {% for commande in commandes %}
             <tr>
                 <td>{{ commande.id }}</td>
-                <td>{{ commande.etat }}</td>
+                <td>{% if commande.etat == 1 %}
+                        Non validée
+                    {% elseif commande.etat == 2 %}
+                        Validée <a href="{{ path('rendez_vous_new', {'id_commande': commande.id}) }}">Prendre rendez-vous?</a>
+                    {% elseif commande.etat == 3 %} 
+                        En préparation
+                    {% elseif commande.etat == 4 %} 
+                        Récupérée
+                    {% endif %}</td>
                 <td>
                     <a href="{{ path('commande_show', {'id': commande.id}) }}">show</a>
                     <a href="{{ path('commande_edit', {'id': commande.id}) }}">edit</a>

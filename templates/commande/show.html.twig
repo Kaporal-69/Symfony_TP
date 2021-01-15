@@ -10,8 +10,10 @@
     {% elseif commande.etat == 2 %}
     Validée
     {% elseif commande.etat == 3 %} 
+    En préparation
+    {% elseif commande.etat == 4 %} 
     Récupérée
-     {% endif %}
+    {% endif %}
 
     <h2>Articles de la commande</h2>
     <table class="table"><thead><th>id Article</th><th>Nom Article</th><th>quantité</th><th>Prix</th><th>action</th></thead>

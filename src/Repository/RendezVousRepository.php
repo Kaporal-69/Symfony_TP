@@ -34,7 +34,7 @@ class RendezVousRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-    */
+    
 
     /*
     public function findOneBySomeField($value): ?RendezVous
@@ -47,4 +47,22 @@ class RendezVousRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+    * @return RendezVous[] Returns an array of RendezVous objects
+    */
+
+    public function findByUserAndNotPickedUp($user)
+    {
+        return $this->createQueryBuilder('r')
+            ->join('r.commande','c')
+            ->andWhere('r.user = :user')
+            ->setParameter('user', $user)
+            ->andWhere('c.etat = :toBePickedUp')
+            ->setParameter('toBePickedUp', 3)
+            ->orderBy('r.jour', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

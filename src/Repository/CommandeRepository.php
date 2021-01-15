@@ -27,7 +27,7 @@ class CommandeRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('c')
             ->andWhere('c.User = :user')
             ->setParameter('user', $user)
-            ->orderBy('c.id', 'ASC')
+            ->orderBy('c.id', 'DESC')
             ->getQuery()
             ->getResult()
         ;
@@ -41,6 +41,7 @@ class CommandeRepository extends ServiceEntityRepository
             ->andWhere('c.etat = :notPurchased')
             ->setParameter('user', $user)
             ->setParameter('notPurchased',1)
+            ->orderBy('c.id', 'DESC')
             ->getQuery()
             ->getOneOrNullResult()
         ;

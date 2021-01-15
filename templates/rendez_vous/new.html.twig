@@ -3,9 +3,11 @@
 {% block title %}New RendezVous{% endblock %}
 
 {% block body %}
-    <h1>Create new RendezVous</h1>
+    <center>
+    <h1>Prenez rendez-vous</h1>
 
     {{ include('rendez_vous/_form.html.twig') }}
 
-    <a href="{{ path('rendez_vous_index') }}">back to list</a>
+    <a href="{{ path('rendez_vous_index') }}">revenir à la liste de rendez-vous</a>
+    </center>
 {% endblock %}

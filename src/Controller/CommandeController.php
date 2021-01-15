@@ -102,6 +102,17 @@ class CommandeController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$commande->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
+            $commande->getLigneCommandes()->clear();
+            $rdv = $commande->getRendezVous();
+            if($rdv) {
+                $rdv->setCommande(null);
+                $commande->setRendezVous(null);
+                $entityManager->persist($rdv);
+                $entityManager->persist($commande);
+                $entityManager->flush();
+            }
+            $entityManager->persist($commande);
+            $entityManager->flush();
             $entityManager->remove($commande);
             $entityManager->flush();
         }
@@ -137,7 +148,7 @@ class CommandeController extends AbstractController
         $commande->setPrixTotal($newLine->getPrixTotal() + $commande->getPrixTotal());
         $em->persist($commande);
         $em->flush();
-        return $this->redirectToRoute('commande_index');
+        return $this->redirectToRoute('commande_show', array('id' => $commande->getId()));
     }
 
     /**
@@ -147,6 +158,13 @@ class CommandeController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $commande->setEtat(2);
+        foreach($commande->getLigneCommandes() as $ligneCommande) {
+            $product = $ligneCommande->getProduct();
+            $stock = $em->getRepository(Stock::class)->findStockByProductAndShop($product,$commande->getMagasin());
+            $stock->setQuantite($stock->getQuantite() - $ligneCommande->getQuantite());
+            $em->persist($stock);
+            $em->flush();
+        }
         $em->persist($commande);
         $em->flush();
         return $this->redirectToRoute('rendez_vous_new', array('id_commande' => $commande->getId()));

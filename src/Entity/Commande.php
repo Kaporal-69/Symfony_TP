@@ -30,7 +30,7 @@ class Commande
     private $magasin;
 
     /**
-     * @ORM\OneToMany(targetEntity=LigneCommande::class, mappedBy="commande")
+     * @ORM\OneToMany(targetEntity=LigneCommande::class, mappedBy="commande", cascade={"merge", "persist"}, orphanRemoval=true)
      */
     private $ligneCommandes;
 
@@ -43,6 +43,11 @@ class Commande
      * @ORM\Column(type="float")
      */
     private $PrixTotal;
+
+    /**
+     * @ORM\OneToOne(targetEntity=RendezVous::class, mappedBy="commande", cascade={"persist", "remove"}, orphanRemoval=true)
+     */
+    private $rendezVous;
 
     public function __construct()
     {
@@ -135,5 +140,17 @@ class Commande
     public function __toString()
     {
         return $this->id."";
+    }
+
+    public function getRendezVous(): ?RendezVous
+    {
+        return $this->rendezVous;
+    }
+
+    public function setRendezVous(?RendezVous $rendezVous): self
+    {
+        $this->rendezVous = $rendezVous;
+
+        return $this;
     }
 }
