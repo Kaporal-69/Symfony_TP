@@ -104,7 +104,7 @@ class RendezVousController extends AbstractController
 
     public function sendConfirmationEmail(RendezVous $rdv, \Swift_Mailer $mailer)
     {
-    $message = (new \Swift_Message('dsjkdsjksdjk'))
+    $message = (new \Swift_Message('Commande confirmée'))
         ->setFrom('usine.swift@gmail.com')
         ->setTo($this->getUser()->getEmail())
         ->setBody(
