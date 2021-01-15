@@ -45,6 +45,8 @@ class RendezVousController extends AbstractController
             $rendezVou->setMagasin($commande->getMagasin());
             $rendezVou->setUser($this->getUser());
             $rendezVou->setCommande($commande);
+            $commande->setEtat(3);
+            $entityManager->persist($commande);
             $entityManager->persist($rendezVou);
             $entityManager->flush();
 
