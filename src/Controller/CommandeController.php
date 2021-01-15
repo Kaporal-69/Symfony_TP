@@ -137,7 +137,7 @@ class CommandeController extends AbstractController
         $commande->setPrixTotal($newLine->getPrixTotal() + $commande->getPrixTotal());
         $em->persist($commande);
         $em->flush();
-        return $this->redirectToRoute('commande_index');
+        return $this->redirectToRoute('commande_show', array('id' => $commande->getId()));
     }
 
     /**
