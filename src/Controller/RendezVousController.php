@@ -29,7 +29,7 @@ class RendezVousController extends AbstractController
     /**
      * @Route("/{id_commande}/new", name="rendez_vous_new", methods={"GET","POST"})
      */
-    public function new(Request $request, $id_commande): Response
+    public function new(Request $request, $id_commande, \Swift_Mailer $mailer): Response
     {
         $em = $this->getDoctrine()->getManager();
         $commande = $em->getRepository(Commande::class)->findOneById($id_commande);
@@ -49,8 +49,7 @@ class RendezVousController extends AbstractController
             $entityManager->persist($commande);
             $entityManager->persist($rendezVou);
             $entityManager->flush();
-
-            return $this->redirectToRoute('rendez_vous_index');
+            return $this->sendConfirmationEmail($rendezVou,$mailer);
         }
 
         return $this->render('rendez_vous/new.html.twig', [
@@ -102,4 +101,22 @@ class RendezVousController extends AbstractController
 
         return $this->redirectToRoute('rendez_vous_index');
     }
+
+    public function sendConfirmationEmail(RendezVous $rdv, \Swift_Mailer $mailer)
+    {
+    $message = (new \Swift_Message('dsjkdsjksdjk'))
+        ->setFrom('usine.swift@gmail.com')
+        ->setTo($this->getUser()->getEmail())
+        ->setBody(
+            $this->renderView(
+                'emails/apt_confirmation.html.twig',
+                ['jour' => $rdv->getJour(), 'horaire' => $rdv->getHoraire(), 'id_commande' => $rdv->getCommande()->getId()]
+            ),
+            'text/html'
+        );
+
+    $mailer->send($message);
+
+    return $this->redirectToRoute('rendez_vous_index');
+}
 }
