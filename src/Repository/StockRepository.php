@@ -47,4 +47,17 @@ class StockRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findStockByProductAndShop($product,$shop): ?Stock
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.product = :product')
+            ->setParameter('product', $product)
+            ->andWhere('s.magasin = :magasin')
+            ->setParameter('magasin', $shop)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+    
 }
