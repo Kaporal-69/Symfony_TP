@@ -19,8 +19,11 @@
                 <td>{{ magasin.id }}</td>
                 <td>{{ magasin.name }}</td>
                 <td>
+                 
                     <a href="{{ path('magasin_show', {'id': magasin.id}) }}">show</a>
+                {% if is_granted('ROLE_ADMIN') %}
                     <a href="{{ path('magasin_edit', {'id': magasin.id}) }}">edit</a>
+                {% endif %}
                 </td>
             </tr>
         {% else %}
@@ -30,6 +33,7 @@
         {% endfor %}
         </tbody>
     </table>
-
+    {% if is_granted('ROLE_ADMIN') %}
     <a href="{{ path('magasin_new') }}">Create new</a>
+    {% endif %}
 {% endblock %}

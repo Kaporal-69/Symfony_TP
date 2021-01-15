@@ -33,10 +33,9 @@
                     {% endif %}
                 </td>
                 <td>
-                   {% if is_granted('ROLE_ADMIN') %}
                         <a href="{{ path('product_show', {'id': stock.product.id}) }}">show</a>
+                   
                         <a href="{{ path('product_edit', {'id': stock.product.id}) }}">edit</a>
-                    {% endif %}
                 </td>
             </tr>
         {% else %}
