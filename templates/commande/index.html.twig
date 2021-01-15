@@ -9,6 +9,7 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Magasin</th>
                 <th>Etat</th>
                 <th>actions</th>
             </tr>
@@ -17,6 +18,7 @@
         {% for commande in commandes %}
             <tr>
                 <td>{{ commande.id }}</td>
+                <td>{{ commande.magasin }}</td>
                 <td>{% if commande.etat == 1 %}
                         Non validée
                     {% elseif commande.etat == 2 %}
