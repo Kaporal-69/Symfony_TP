@@ -5,9 +5,9 @@
 {% block body %}
     <h1>{{ magasin.name }}</h1>
 
-    <a href="{{ path('magasin_index') }}">back to list</a>
+    <a href="{{ path('magasin_index') }}">Retour à la liste</a>
 
-    <a href="{{ path('magasin_edit', {'id': magasin.id}) }}">edit</a>
+    <a href="{{ path('magasin_edit', {'id': magasin.id}) }}">Modifier</a>
 
     {{ include('magasin/_delete_form.html.twig') }}
     <h2>Produits</h2>
@@ -33,9 +33,9 @@
                     {% endif %}
                 </td>
                 <td>
-                        <a href="{{ path('product_show', {'id': stock.product.id}) }}">show</a>
+                        <a href="{{ path('product_show', {'id': stock.product.id}) }}">Voir</a>
                    
-                        <a href="{{ path('product_edit', {'id': stock.product.id}) }}">edit</a>
+                        <a href="{{ path('product_edit', {'id': stock.product.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}

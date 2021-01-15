@@ -20,9 +20,9 @@
                 <td>{{ product.name }}</td>
                 <td>
                 
-                    <a href="{{ path('product_show', {'id': product.id}) }}">show</a>
+                    <a href="{{ path('product_show', {'id': product.id}) }}">Voir</a>
                     {% if is_granted('ROLE_ADMIN') %}
-                    <a href="{{ path('product_edit', {'id': product.id}) }}">edit</a>
+                    <a href="{{ path('product_edit', {'id': product.id}) }}">Modifier</a>
                     {% endif %}
                 </td>
             </tr>

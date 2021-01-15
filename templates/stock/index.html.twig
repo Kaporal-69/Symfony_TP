@@ -25,8 +25,8 @@
                 <td>{{ stock.quantite }}</td>
                 <td>{{ stock.prix }}</td>
                 <td>
-                    <a href="{{ path('stock_show', {'id': stock.id}) }}">show</a>
-                    <a href="{{ path('stock_edit', {'id': stock.id}) }}">edit</a>
+                    <a href="{{ path('stock_show', {'id': stock.id}) }}">Voir</a>
+                    <a href="{{ path('stock_edit', {'id': stock.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}
