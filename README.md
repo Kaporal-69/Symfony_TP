@@ -25,7 +25,7 @@ MAILER_URL=gmail://usine.swift:ytgviacursjgxscn@localhost
 ###< symfony/swiftmailer-bundle ###
 ```
 
-> Remarque: si le .env n'existe pas, utiliser le template dans `.env.template`
+> Remarque: si le .env n'existe pas, utiliser le template dans `.env.template` disponible à la racine du projet.
 
 ### 4. Effectuer la migration de la base de données
 
