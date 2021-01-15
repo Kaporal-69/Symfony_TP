@@ -22,7 +22,7 @@ class RendezVousController extends AbstractController
     public function index(RendezVousRepository $rendezVousRepository): Response
     {
         return $this->render('rendez_vous/index.html.twig', [
-            'rendez_vouses' => $rendezVousRepository->findAll(),
+            'rendez_vouses' => $rendezVousRepository->findByUserAndNotPickedUp($this->getUser()),
         ]);
     }
 
