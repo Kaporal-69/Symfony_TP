@@ -3,7 +3,7 @@
 ## A propos
 
 Ce projet a été réalisé par Wissale Jerraf et Mélanie Lamy dans le cadre d'un tp noté de la Licence Professionnelle METINET.
-## Instalation
+## Installation
 ### 1. Cloner le dépôt
 
 Clonez le dépôt dans le dossier de votre choix
