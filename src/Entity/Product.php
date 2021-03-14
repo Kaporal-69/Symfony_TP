@@ -10,18 +10,19 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
- * @ApiResource(
+* @ApiResource(
+ *     attributes={"security"="is_granted('ROLE_USER')"},
  *      collectionOperations={
  *         "get",
  *         "post"={"security"="is_granted('ROLE_USER')"}
  *     },
  *     itemOperations={
  *         "get",
- *         "put"={"security"="is_granted('ROLE_ADMIN') },
- *         "delete"={"security"="is_granted('ROLE_ADMIN')}
+ *         "put"={"security"="is_granted('ROLE_USER')" },
+ *         "delete"={"security"="is_granted('ROLE_USER')" }
  *     }
- * )
- */
+ * ) 
+ **/
 class Product
 {
     /**

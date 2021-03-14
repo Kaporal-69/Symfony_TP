@@ -6,9 +6,12 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\LigneCommandeRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
  * @ORM\Entity(repositoryClass=LigneCommandeRepository::class)
- * @ApiResource
+ * @ApiResource(
+ *     attributes={"security"="is_granted('ROLE_USER')"}
+ * )
  */
 class LigneCommande
 {

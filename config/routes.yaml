@@ -1,6 +1,6 @@
-home:
-  path: /
-  controller: App\Controller\HomeController::index
+authentication_token:
+  path: /api/authentication_token
+  methods: ['POST']
 
 #index:
 #    path: /

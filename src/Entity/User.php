@@ -10,46 +10,64 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
- *  @ApiResource
- */
+ * @ApiResource(
+ *     normalizationContext={"groups"={"user:read"}},
+ *     denormalizationContext={"groups"={"user:write"}}
+ * ) 
+ **/
 class User implements UserInterface
 {
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("user:read")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Groups({"user:read", "user:write"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="json")
+     * @Groups("user:read")
      */
     private $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Groups("user:write")
      */
     private $password;
 
     /**
-     * @ORM\OneToMany(targetEntity=Commande::class, mappedBy="User")
+     * @ORM\OneToMany(targetEntity=Commande::class, mappedBy="User", cascade={"persist", "remove"})
+     * @Groups({"user:read", "user:write"})
      */
     private $commandes;
 
     /**
-     * @ORM\OneToMany(targetEntity=RendezVous::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=RendezVous::class, mappedBy="user", cascade={"persist", "remove"})
+     * @Groups({"user:read", "user:write"})
      */
     private $rendezVouses;
+
+    /**
+     * @Groups({"user:read", "user:write"})
+     * 
+     * @SerializedName("password")
+     */
+    private $plainPassword;
 
     public function __construct()
     {
@@ -198,5 +216,17 @@ class User implements UserInterface
     public function __toString()
     {
         return $this->email;
+    }
+
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(string $plainPassword): self
+    {
+        $this->plainPassword = $plainPassword;
+
+        return $this;
     }
 }
